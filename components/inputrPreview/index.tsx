@@ -31,7 +31,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onChange }) => {
   return (
     <ImageUploaderWrapper>
       <label htmlFor="image-upload">
-        Choose an image
+        Escolha uma imagem
         <input
           id="image-upload"
           type="file"

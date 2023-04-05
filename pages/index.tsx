@@ -10,6 +10,7 @@ const Home: NextPage = () => {
 
   const[image1, setImage1] = useState<File>();
   const[image2, setImage2] = useState<File>();
+  const[similarity, setSimilarity] = useState<number>();
 
   const imageHandle1 = (image: File) => {
     setImage1(image);
@@ -52,7 +53,13 @@ const Home: NextPage = () => {
      
     );
 
-    console.log(response)
+    console.log(response);
+    if (response.data.FaceMatches && response.data.FaceMatches[0]) {
+      setSimilarity(response.data.FaceMatches[0].Similarity);
+    }
+    else {
+      setSimilarity(0)
+    }
     return response.data;
   };
 
@@ -64,20 +71,31 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <img src="favicon.ico" style={{width: "250px"}}></img>
         <h1 className={styles.title}>
-          Face<a href="https://nextjs.org">2</a>Face
+          Face<a href="https://github.com/ayanfaustt/p4_project">2</a>Face
         </h1>
-
+        
         <p className={styles.description}>
           Comparador de Faces
         </p>
 
-        <div className={styles.grid}>
-          <ImageUploader onChange={imageHandle1}></ImageUploader>
-          <ImageUploader onChange={imageHandle2}></ImageUploader>
-          <p></p>
-          <button onClick={() => upload(image1, image2)}>Compare</button>
+        <div className={styles.grid} style={{paddingLeft: "130px"}}>
+          <div>
+            <ImageUploader onChange={imageHandle1}></ImageUploader>
+          </div>
+          <div>
+            <ImageUploader onChange={imageHandle2}></ImageUploader>
+          </div>
         </div>
+        <div style={{paddingTop: "50px"}}>
+          <button onClick={() => upload(image1, image2)}>Comparar!</button>
+        </div>
+
+      <span style={{paddingTop: "20px"}}>
+        Taxa de similaridade de {similarity} %
+      </span>
+
       </main>
 
     </div>
